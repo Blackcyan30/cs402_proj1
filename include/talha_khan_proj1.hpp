@@ -37,6 +37,7 @@ void selection_sort(vector<T> &list, bool descending = false);
 template <typename T>
 void insertion_sort(vector<T> &list, bool descending = false);
 
+// Talha
 /* Quick Sort */
 template <typename T>
 vector<T> &quick_partition(vector<T> &list, bool descending = false);
@@ -44,6 +45,7 @@ vector<T> &quick_partition(vector<T> &list, bool descending = false);
 template <typename T>
 void quicksort(vector<T> &list, bool descending = false);
 
+// talha
 /* Merge Sort */
 template <typename T>
 void merge_sort(vector<T> &list, bool descending = false);
@@ -53,20 +55,17 @@ template <typename T>
 void bucket_merge_sort(vector<T> &list, bool descending = false);
 
 /* Binary Radix Sort */
-/*
 template <Integral T>
 void binary_radix_sort(vector<T> &list, bool descending = false);
-*/
 
 /* Your Hybrid Sort */
 template <typename T>
 void my_hybrid_sort(vector<T> &list, bool descending = false);
 
+// Talha
 /* Base B Radix Sort */
-/*
 template <Integral T>
 void radix_sort(vector<T> &list, unsigned int base = 10,
                 bool descending = false);
-*/
 
 #endif
