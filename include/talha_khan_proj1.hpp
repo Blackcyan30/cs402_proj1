@@ -3,18 +3,23 @@
 #include <type_traits>
 #include <vector>
 
-#ifndef TALHA_KHAN_PROJECT1
-#define TALHA_KHAN_PROJECT1
-
+#pragma once
 using namespace std;
 
 /*** Helper Functions ***/
-unsigned int get_rand_index(unsigned int len) {
+inline unsigned int get_rand_index(unsigned int len) {
   std::srand(std::time(nullptr));
   return static_cast<unsigned int>(std::rand() % len);
 }
 
 /*** STUDENT HELPER FUNCTIONS HERE ***/
+
+int random_num(int min, int max);
+template <typename T>
+void quicksort_helper(std::vector<T> &list, int low, int high, bool descending);
+
+template <typename T>
+int partition_helper(std::vector<T> &list, int low, int high, bool descending);
 
 /*** END STUDENT HELPER FUNCTIONS ***/
 
@@ -68,4 +73,3 @@ template <Integral T>
 void radix_sort(vector<T> &list, unsigned int base = 10,
                 bool descending = false);
 
-#endif

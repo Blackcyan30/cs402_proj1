@@ -3,7 +3,7 @@
 #include <chrono>
 #include <iostream>
 
-#include "../tests/testing.hpp"
+// #include "testing.hpp"
 #include "talha_khan_proj1.hpp"
 
 // using namespace std;
@@ -116,7 +116,9 @@ void insertion_sort(std::vector<T> &list, bool descending) {
  * */
 template <typename T>
 void quicksort(std::vector<T> &list, bool descending) {
-  // Your code here!
+  if (list.size() <= 1) return;
+  if (is_sorted(list.begin(), list.end())) return;
+  quicksort_helper(list, 0, list.size() - 1, descending);
 }
 
 /* Quick Partition
@@ -127,10 +129,39 @@ void quicksort(std::vector<T> &list, bool descending) {
  */
 template <typename T>
 std::vector<T> &quick_partition(std::vector<T> &list, bool descending) {
-  // Your code here!
-  //
-  // You can use the helper function
-  //      unsigned int get_rand_index(unsigned int len)
+  partition_helper(list, 0, list.size() - 1, descending);
+  return list;
+}
+
+template <typename T>
+void quicksort_helper(std::vector<T> &list, int low, int high,
+                      bool descending) {
+  if (low < high) {
+    int j = partition_helper(list, low, high, descending);
+    quicksort_helper(list, low, j, descending);
+    quicksort_helper(list, j + 1, high, descending);
+  }
+}
+
+template <typename T>
+int partition_helper(std::vector<T> &list, int low, int high, bool descending) {
+  T pivot = list[random_num(low, high)];
+  int i = low, j = high;
+  while (i < j) {
+    do {
+      i++;
+    } while ((descending ? list[i] > pivot : list[i] < pivot));
+    // } while (i <= high && (descending ? list[i] > pivot : list[i] < pivot));
+    do {
+      j--;
+    } while ((descending ? list[j] < pivot : list[j] > pivot));
+    // } while (j >= low && (descending ? list[j] < pivot : list[j] > pivot));
+    if (i < j) {
+      std::swap(list[i], list[j]);
+    }
+  }
+  std::swap(list[low], list[j]);
+  return j;
 }
 
 /* Merge Sort
@@ -253,30 +284,14 @@ void radix_sort(std::vector<T> &list, unsigned int base, bool descending) {
   // Your code here!
 }
 
-int main() {
-  /**** STUDENT CODE HERE ****/
-
-  /**** END STUDENT CODE ****/
-
-  /***** DO NOT MODIFY BELOW THIS LINE *****/
-  /*** INSTRUCTIONS ***
-   *
-   * Before submitting your code:
-   *   - remove all code within the main function that you have written above
-   * the `do-not-modify` line;
-   *   - uncomment all lines below that begin with "//".
-   *
-   */
-  // std::vector<int> test_list {1, 2, 3, 4, 5};
-  // bubble_sort(test_list);
-  // selection_sort(test_list);
-  // insertion_sort(test_list);
-  // quicksort(test_list);
-  // merge_sort(test_list);
-  // bucket_merge_sort(test_list);
-  // binary_radix_sort(test_list);
-  // my_hybrid_sort(test_list);
-  // radix_sort(test_list);
-
-  return 0;
+int random_num(int min, int max) {
+  std::random_device
+      rd;  // Hardware-based entropy (true randomness if supported)
+  std::mt19937 gen(rd());  // Mersenne Twister seeded with rd
+  std::uniform_int_distribution<> dis(
+      min, max);  // Uniform distribution in [min, max]
+  return dis(gen);
 }
+
+template void quicksort<int>(std::vector<int> &, bool);
+template std::vector<int> &quick_partition<int>(std::vector<int> &, bool);
