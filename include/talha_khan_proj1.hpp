@@ -2,13 +2,15 @@
 #include <random>
 #include <type_traits>
 #include <vector>
+#include <cstdlib>
+#include <time>
 
 #pragma once
 using namespace std;
 
 /*** Helper Functions ***/
 inline unsigned int get_rand_index(unsigned int len) {
-  std::srand(std::time(nullptr));
+  srand(static_cast<unsigned int>(time(nullptr)));
   return static_cast<unsigned int>(std::rand() % len);
 }
 
