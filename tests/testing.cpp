@@ -76,6 +76,7 @@ vector<int> gen_ascending_3swap_list(unsigned int len) {
     int_list[swap_index1] = int_list[swap_index2];
     int_list[swap_index2] = temp;
   }
+  return int_list;
 }
 
 /* Genarates a list of all equal entries of length len */

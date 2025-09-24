@@ -20,12 +20,17 @@ set(SOURCES
     src/talha_khan_proj1.cpp
 )
 
-add_executable(sorting_algorithms ${SOURCES})
+add_library(sorting_lib STATIC src/talha_khan_proj1.cpp)
+set_property(TARGET sorting_lib PROPERTY CXX_STANDARD 20)
+
+add_executable(sorting_algorithms src/main.cpp)
+target_link_libraries(sorting_algorithms sorting_lib)
 set_property(TARGET sorting_algorithms PROPERTY OUTPUT_NAME sorting_algorithms.out)
 set_property(TARGET sorting_algorithms PROPERTY CXX_STANDARD 20)
 
 # ---- Tests --------------------------------------------------------------------
 include(CTest)
+set(CTEST_OUTPUT_ON_FAILURE ON)
 include(FetchContent)
 if(BUILD_TESTING)
   FetchContent_Declare(

@@ -5,12 +5,13 @@ add_executable(unit_tests
 
 target_link_libraries(unit_tests PRIVATE
   gtest_main
+  sorting_lib
 )
 
 set_property(TARGET unit_tests PROPERTY OUTPUT_NAME unit_tests.out)
 set_property(TARGET unit_tests PROPERTY CXX_STANDARD 20)
 
 gtest_discover_tests(unit_tests
-  EXTRA_ARGS --gtest_color=yes
+  EXTRA_ARGS --gtest_color=yes --gtest_print_time=1
   DISCOVERY_TIMEOUT 10
 )
