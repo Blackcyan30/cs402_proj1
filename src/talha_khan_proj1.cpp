@@ -222,27 +222,76 @@ void insertion_sort_helper(std::vector<T> &list, int start, int end, bool descen
 }
 
 template <typename T>
-void in_place_merge(std::vector<T>& list, size_t left, size_t mid, size_t right, bool descending) {}
+void merge(std::vector<T>& list, int left, int mid, int right, bool descending) {
+    // For small segments simply do insertion sort
+    if (right - left <= 32) {
+        insertion_sort_helper(list, left, right + 1, descending);
+        return;
+    }
+
+    int i = left;   // left 
+    int j = mid + 1; // right 
+
+    while (i <= mid && j <= right) {
+        bool advance_left = false;
+        // Check if we've exhausted the right segment
+        if (j > right) {
+            advance_left = true;
+        } else {
+            if (descending) {
+                // For descending order, keep list[i] if it's >= list[j]
+                if (list[i] >= list[j]) {
+                    advance_left = true;
+                }
+            } else {
+                // For ascending order, keep list[i] if it's <= list[j]
+                if (list[i] <= list[j]) {
+                    advance_left = true;
+                }
+            }
+        }
+
+        if (advance_left) {
+            // Just move to the left
+            ++i;
+        } else {
+            // Insert list[j] at position i and shift elements
+            T temp = list[j];
+            for (size_t k = j; k > i; --k) {
+                list[k] = list[k - 1];
+            }
+            list[i] = temp;
+            ++i;
+            ++j;
+            ++mid;
+        }
+    }
+}
 
 template <typename T>
 void bucket_merge_sort(std::vector<T> &list, bool descending) {
   int size = list.size();
-  const int bucket_size = 32;
+  const int bucket_size = 4;
   int i = 0;
+
   for (; i + bucket_size <= size; i += bucket_size){
-    insertion_sort_helper(list, i, i + bucket_size - 1, descending);
+    insertion_sort_helper(list, i, i + bucket_size, descending);
   }
 
+  // For any remaining data
   if (i < size) {
-    insertion_sort_helper(list, i, size - 1, descending);
+    insertion_sort_helper(list, i, size , descending);
   }
 
   for (int n = bucket_size; n < size; n *= 2) {
     for (int left = 0; left < size; left += 2 * n) {
-        int mid = left + size - 1;
-        int right = std::min(left + 2 * n - 1, size - 1);
+        int mid = left + n - 1;
+        int right = left + 2 * n - 1;
+        if (right >= size){
+          right = size - 1;
+        }
         if (mid < size - 1) {
-            in_place_merge(list, left, mid, right, descending);
+            merge(list, left, mid, right, descending);
         }
     }
   }
@@ -391,6 +440,19 @@ int main() {
 
   std::cout << "All tests completed successfully!\n";
 
+  std:: cout << "\nBucket Merge Sort Tests" << std::endl;
+  std::vector<int> vec7 = {5, 2, 9, 1, 5, 6, 22, 4, 3, 11, 55, 10};
+  std::cout << "\nOriginal: ";
+  print_vector(vec7);
+  std::cout << "\nTest 1: Ascending\n";
+  bucket_merge_sort(vec7, false);
+  std::cout << "Sorted:   ";
+  print_vector(vec7);
+
+  std::cout << "\nTest 2: Descending\n";
+  bucket_merge_sort(vec7, true);
+  std::cout << "Sorted:   ";
+  print_vector(vec7);
   /**** END STUDENT CODE ****/
 
   /***** DO NOT MODIFY BELOW THIS LINE *****/
