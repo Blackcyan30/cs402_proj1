@@ -32,6 +32,9 @@ int partition_helper(std::vector<T> &list, int low, int high, bool descending);
 template <class T>
 concept Integral = is_integral<T>::value;
 
+template<Integral T>
+void binary_radix_sort_helper(vector<T> &list, bool descending = false);
+
 /* Bubble Sort */
 template <typename T>
 void bubble_sort(vector<T> &list, bool descending = false);
