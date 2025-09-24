@@ -3,7 +3,7 @@
 #include <type_traits>
 #include <vector>
 #include <cstdlib>
-#include <time>
+#include <ctime>
 
 #pragma once
 using namespace std;
