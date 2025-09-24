@@ -178,24 +178,13 @@ int partition_helper(std::vector<T> &list, int low, int high, bool descending) {
  * */
 template <typename T>
 void merge_sort(std::vector<T> &list, bool decending) {
-  // Your code here!
-  std::uint64_t n = list.size();
-  if (n <= 1) return;
-  if (is_sorted(list.begin(), list.end())) return;
-  std::vector<T> left(list.begin(), list.begin() + n / 2);
-  std::vector<T> right(list.begin() + n / 2, list.end());
-  merge_sort(left, descending);
-  merge_sort(right, descending);
-  merge(left, right, list, descending);
+
 }
 
 template <typename T>
 void merge(std::vector<T> &left, std::vector<T> &right, std::vector<T> &list,
            bool descending) {
-  std::uint64_t i{0}, j{0}, k{0};
-  if (left[i] < right[j]) {
-    list.push_back()
-  }
+
 }
 
 /* Bucket Merge Sort
