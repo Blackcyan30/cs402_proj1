@@ -73,7 +73,33 @@ void bubble_sort(std::vector<T> &list, bool descending) {
  * */
 template <typename T>
 void selection_sort(std::vector<T> &list, bool descending) {
-  // Your code here!
+  int n = list.size();
+    if (n <= 1) return; // No sorting needed
+
+    for (int i = 0; i < n - 1; i++) {
+        int swap_index = i; 
+        for (int j = i + 1; j < n; j++) {
+            if (descending) {
+                // If descending order, find the maximum
+                if (list[j] > list[swap_index]) {
+                    swap_index = j;
+                }
+            } else {
+                // If ascending order, find the minimum
+                if (list[j] < list[swap_index]) {
+                    swap_index = j;
+                }
+            }
+        }
+        // Swap with the first ith element 
+        if (swap_index != i) {
+            T temp = list[i];
+            list[i] = list[swap_index];
+            list[swap_index] = temp;
+        }
+    }
+    // Time Complexity : O(n^2)
+    // Space Complexity : O(1)
 }
 
 /* Insertion Sort
