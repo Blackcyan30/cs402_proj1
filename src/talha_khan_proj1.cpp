@@ -2,9 +2,11 @@
 #include <algorithm>
 #include <chrono>
 #include <iostream>
+//#include <cassert>
+//using namespace std;
 
-// #include "testing.hpp"
-#include "talha_khan_proj1.hpp"
+#include "../tests/testing.hpp"
+#include "../include/talha_khan_proj1.hpp"
 
 // using namespace std;
 
@@ -142,9 +144,7 @@ void insertion_sort(std::vector<T> &list, bool descending) {
  * */
 template <typename T>
 void quicksort(std::vector<T> &list, bool descending) {
-  if (list.size() <= 1) return;
-  if (is_sorted(list.begin(), list.end())) return;
-  quicksort_helper(list, 0, list.size() - 1, descending);
+  // Your code here!
 }
 
 /* Quick Partition
@@ -155,35 +155,10 @@ void quicksort(std::vector<T> &list, bool descending) {
  */
 template <typename T>
 std::vector<T> &quick_partition(std::vector<T> &list, bool descending) {
-  partition_helper(list, 0, list.size() - 1, descending);
-  return list;
-}
-
-template <typename T>
-void quicksort_helper(std::vector<T> &list, int low, int high,
-                      bool descending) {
-  if (low < high) {
-    int j = partition_helper(list, low, high, descending);
-    quicksort_helper(list, low, j, descending);
-    quicksort_helper(list, j + 1, high, descending);
-  }
-}
-
-template <typename T>
-int partition_helper(std::vector<T> &list, int low, int high, bool descending) {
-  std::swap(list[low], list[random_num(low, high)]);
-  T pivot = list[low];
-  int i = low - 1, j = high + 1;
-  while (true) {
-    do {
-      ++i;
-    } while (descending ? list[i] > pivot : list[i] < pivot);
-    do {
-      --j;
-    } while (descending ? list[j] < pivot : list[j] > pivot);
-    if (i >= j) return j;
-    std::swap(list[i], list[j]);
-  }
+  // Your code here!
+  //
+  // You can use the helper function
+  //      unsigned int get_rand_index(unsigned int len)
 }
 
 /* Merge Sort
@@ -205,23 +180,6 @@ int partition_helper(std::vector<T> &list, int low, int high, bool descending) {
 template <typename T>
 void merge_sort(std::vector<T> &list, bool decending) {
   // Your code here!
-  // std::uint64_t n = list.size();
-  // if (n <= 1) return;
-  // if (is_sorted(list.begin(), list.end())) return;
-  // std::vector<T> left(list.begin(), list.begin() + n / 2);
-  // std::vector<T> right(list.begin() + n / 2, list.end());
-  // merge_sort(left, descending);
-  // merge_sort(right, descending);
-  // merge(left, right, list, descending);
-}
-
-template <typename T>
-void merge(std::vector<T> &left, std::vector<T> &right, std::vector<T> &list,
-           bool descending) {
-  // std::uint64_t i{0}, j{0}, k{0};
-  // if (left[i] < right[j]) {
-  //   list.push_back()
-  // }
 }
 
 /* Bucket Merge Sort
@@ -242,9 +200,101 @@ void merge(std::vector<T> &left, std::vector<T> &right, std::vector<T> &list,
  *
  *
  */
+
+template <typename T>
+void insertion_sort_helper(std::vector<T> &list, int start, int end, bool descending) {
+    for (int i = start + 1; i < end; i++) {
+        T key = list[i];
+        int j = i;
+        if (descending) {
+            while (j > start && list[j - 1] < key) {
+                list[j] = list[j - 1];
+                j--;
+            }
+        } else {
+            while (j > start && list[j - 1] > key) {
+                list[j] = list[j - 1];
+                j--;
+            }
+        }
+        list[j] = key;
+    }
+}
+
+template <typename T>
+void merge(std::vector<T>& list, int left, int mid, int right, bool descending) {
+    // For small segments simply do insertion sort
+    if (right - left <= 32) {
+        insertion_sort_helper(list, left, right + 1, descending);
+        return;
+    }
+
+    int i = left;   // left 
+    int j = mid + 1; // right 
+
+    while (i <= mid && j <= right) {
+        bool advance_left = false;
+        // Check if we've exhausted the right segment
+        if (j > right) {
+            advance_left = true;
+        } else {
+            if (descending) {
+                // For descending order, keep list[i] if it's >= list[j]
+                if (list[i] >= list[j]) {
+                    advance_left = true;
+                }
+            } else {
+                // For ascending order, keep list[i] if it's <= list[j]
+                if (list[i] <= list[j]) {
+                    advance_left = true;
+                }
+            }
+        }
+
+        if (advance_left) {
+            // Just move to the left
+            ++i;
+        } else {
+            // Insert list[j] at position i and shift elements
+            T temp = list[j];
+            for (size_t k = j; k > i; --k) {
+                list[k] = list[k - 1];
+            }
+            list[i] = temp;
+            ++i;
+            ++j;
+            ++mid;
+        }
+    }
+}
+
 template <typename T>
 void bucket_merge_sort(std::vector<T> &list, bool descending) {
-  // Your code here!
+  int size = list.size();
+  const int bucket_size = 4;
+  int i = 0;
+
+  for (; i + bucket_size <= size; i += bucket_size){
+    insertion_sort_helper(list, i, i + bucket_size, descending);
+  }
+
+  // For any remaining data
+  if (i < size) {
+    insertion_sort_helper(list, i, size , descending);
+  }
+
+  for (int n = bucket_size; n < size; n *= 2) {
+    for (int left = 0; left < size; left += 2 * n) {
+        int mid = left + n - 1;
+        int right = left + 2 * n - 1;
+        if (right >= size){
+          right = size - 1;
+        }
+        if (mid < size - 1) {
+            merge(list, left, mid, right, descending);
+        }
+    }
+  }
 }
 
 /* Binary Radix Sort
@@ -261,10 +311,10 @@ void bucket_merge_sort(std::vector<T> &list, bool descending) {
  *                      - (unsigned) int
  *                      - (unsigned) long int
  */
-template <Integral T>
-void binary_radix_sort(std::vector<T> &list, bool descending) {
-  // Your code here!
-}
+// template <Integral T>
+// void binary_radix_sort(std::vector<T> &list, bool descending) {
+//   // Your code here!
+// }
 
 /* Your Hybrid Sort
  *
@@ -318,19 +368,111 @@ void my_hybrid_sort(std::vector<T> &list, bool descending) {
  *
  *
  */
-template <Integral T>
-void radix_sort(std::vector<T> &list, unsigned int base, bool descending) {
-  // Your code here!
+// template <Integral T>
+// void radix_sort(std::vector<T> &list, unsigned int base, bool descending) {
+//   // Your code here!
+// }
+
+// Helper function to print vector
+template <typename T>
+void print_vector(const std::vector<T>& vec) {
+    for (const auto& elem : vec) {
+        std::cout << elem << " ";
+    }
+    std::cout << std::endl;
 }
 
-int random_num(int min, int max) {
-  std::random_device
-      rd;  // Hardware-based entropy (true randomness if supported)
-  std::mt19937 gen(rd());  // Mersenne Twister seeded with rd
-  std::uniform_int_distribution<> dis(
-      min, max);  // Uniform distribution in [min, max]
-  return dis(gen);
-}
+int main() {
+  /**** STUDENT CODE HERE ****/
+  std:: cout << "Selection Sort Tests" << std::endl;
+  std::vector<int> vec1 = {5, 2, 9, 1, 5, 6};
+  std::cout << "Test 1 - Integers, Ascending:\nOriginal: ";
+  print_vector(vec1);
+  selection_sort(vec1, false);
+  std::cout << "Sorted:   ";
+  print_vector(vec1);
+  std::cout << std::endl;
 
-template void quicksort<int>(std::vector<int> &, bool);
-template std::vector<int> &quick_partition<int>(std::vector<int> &, bool);
+  // Test Case 2: Sorting integers in descending order
+  std::vector<int> vec2 = {5, 2, 9, 1, 5, 6};
+  std::cout << "Test 2 - Integers, Descending:\nOriginal: ";
+  print_vector(vec2);
+  selection_sort(vec2, true);
+  std::cout << "Sorted:   ";
+  print_vector(vec2);
+  std::cout << std::endl;
+
+  // Test Case 3: Empty vector
+  std::vector<int> vec3 = {};
+  std::cout << "Test 3 - Empty vector:\nOriginal: ";
+  print_vector(vec3);
+  selection_sort(vec3, false);
+  std::cout << "Sorted:   ";
+  print_vector(vec3);
+  std::cout << std::endl;
+
+  // Test Case 4: Single element
+  std::vector<int> vec4 = {42};
+  std::cout << "Test 4 - Single element:\nOriginal: ";
+  print_vector(vec4);
+  selection_sort(vec4, false);
+  std::cout << "Sorted:   ";
+  print_vector(vec4);
+  std::cout << std::endl;
+
+  // Test Case 5: Doubles in ascending order
+  std::vector<double> vec5 = {3.14, 1.41, 2.71, 0.58};
+  std::cout << "Test 5 - Doubles, Ascending:\nOriginal: ";
+  print_vector(vec5);
+  selection_sort(vec5, false);
+  std::cout << "Sorted:   ";
+  print_vector(vec5);
+  std::cout << std::endl;
+
+  // Test Case 6: Already sorted vector
+  std::vector<int> vec6 = {1, 2, 3, 4, 5};
+  std::cout << "Test 6 - Already sorted, Ascending:\nOriginal: ";
+  print_vector(vec6);
+  selection_sort(vec6, false);
+  std::cout << "Sorted:   ";
+  print_vector(vec6);
+  std::cout << std::endl;
+
+  std::cout << "All tests completed successfully!\n";
+
+  std:: cout << "\nBucket Merge Sort Tests" << std::endl;
+  std::vector<int> vec7 = {5, 2, 9, 1, 5, 6, 22, 4, 3, 11, 55, 10};
+  std::cout << "\nOriginal: ";
+  print_vector(vec7);
+  std::cout << "\nTest 1: Ascending\n";
+  bucket_merge_sort(vec7, false);
+  std::cout << "Sorted:   ";
+  print_vector(vec7);
+
+  std::cout << "\nTest 2: Descending\n";
+  bucket_merge_sort(vec7, true);
+  std::cout << "Sorted:   ";
+  print_vector(vec7);
+  /**** END STUDENT CODE ****/
+
+  /***** DO NOT MODIFY BELOW THIS LINE *****/
+  /*** INSTRUCTIONS ***
+   *
+   * Before submitting your code:
+   *   - remove all code within the main function that you have written above
+   * the `do-not-modify` line;
+   *   - uncomment all lines below that begin with "//".
+   *
+   */
+  //vector<int> test_list {5, 2, 1, 3, 4};
+  // bubble_sort(test_list);
+  // insertion_sort(test_list);
+  // quicksort(test_list);
+  // merge_sort(test_list);
+  // bucket_merge_sort(test_list);
+  // binary_radix_sort(test_list);
+  // my_hybrid_sort(test_list);
+  // radix_sort(test_list);
+  // Test Case 1: Sorting integers in ascending order
+  return 0;
+}
