@@ -28,4 +28,4 @@ jobs:
     - name: Run tests
       run: |
         cd build
-        ./tests/unit_tests.out
+        ctest
