@@ -145,23 +145,19 @@ void quicksort_helper(std::vector<T> &list, int low, int high,
 
 template <typename T>
 int partition_helper(std::vector<T> &list, int low, int high, bool descending) {
-  T pivot = list[random_num(low, high)];
-  int i = low, j = high;
-  while (i < j) {
+  std::swap(list[low], list[random_num(low, high)]);
+  T pivot = list[low];
+  int i = low - 1, j = high + 1;
+  while (true) {
     do {
-      i++;
-    } while ((descending ? list[i] > pivot : list[i] < pivot));
-    // } while (i <= high && (descending ? list[i] > pivot : list[i] < pivot));
+      ++i;
+    } while (descending ? list[i] > pivot : list[i] < pivot);
     do {
-      j--;
-    } while ((descending ? list[j] < pivot : list[j] > pivot));
-    // } while (j >= low && (descending ? list[j] < pivot : list[j] > pivot));
-    if (i < j) {
-      std::swap(list[i], list[j]);
-    }
+      --j;
+    } while (descending ? list[j] < pivot : list[j] > pivot);
+    if (i >= j) return j;
+    std::swap(list[i], list[j]);
   }
-  std::swap(list[low], list[j]);
-  return j;
 }
 
 /* Merge Sort
@@ -183,6 +179,23 @@ int partition_helper(std::vector<T> &list, int low, int high, bool descending) {
 template <typename T>
 void merge_sort(std::vector<T> &list, bool decending) {
   // Your code here!
+  std::uint64_t n = list.size();
+  if (n <= 1) return;
+  if (is_sorted(list.begin(), list.end())) return;
+  std::vector<T> left(list.begin(), list.begin() + n / 2);
+  std::vector<T> right(list.begin() + n / 2, list.end());
+  merge_sort(left, descending);
+  merge_sort(right, descending);
+  merge(left, right, list, descending);
+}
+
+template <typename T>
+void merge(std::vector<T> &left, std::vector<T> &right, std::vector<T> &list,
+           bool descending) {
+  std::uint64_t i{0}, j{0}, k{0};
+  if (left[i] < right[j]) {
+    list.push_back()
+  }
 }
 
 /* Bucket Merge Sort
