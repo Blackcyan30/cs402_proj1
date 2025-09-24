@@ -301,7 +301,7 @@ void binary_radix_sort(vector<T> &list, bool descending) {
  * Binary Radix Sort algorithm above.
  *
  */
-template<Integral T> 
+template<typename T> 
 void binary_radix_sort_helper(vector<T> &list, bool descending) {
     if (list.size() == 0) return;
     T maxValue = list[0];

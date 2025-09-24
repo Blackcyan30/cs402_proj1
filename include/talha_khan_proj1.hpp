@@ -23,6 +23,9 @@ void quicksort_helper(std::vector<T> &list, int low, int high, bool descending);
 template <typename T>
 int partition_helper(std::vector<T> &list, int low, int high, bool descending);
 
+template<typename T>
+void binary_radix_sort_helper(vector<T> &list, bool descending = false);
+
 /*** END STUDENT HELPER FUNCTIONS ***/
 
 /*** DO NOT MODIFY BELOW ***/
@@ -31,9 +34,6 @@ int partition_helper(std::vector<T> &list, int low, int high, bool descending);
 /** Helper type for integrals only **/
 template <class T>
 concept Integral = is_integral<T>::value;
-
-template<Integral T>
-void binary_radix_sort_helper(vector<T> &list, bool descending = false);
 
 /* Bubble Sort */
 template <typename T>
