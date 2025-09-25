@@ -93,6 +93,15 @@ void merge(std::vector<T>& list, int left, int mid, int right, bool descending) 
 
 
 
+
+template<typename T>
+void binary_radix_sort_helper(vector<T> &list, bool descending = false);
+
+
+template <typename T>
+void merge(std::vector<T> &left, std::vector<T> &right, std::vector<T> &list,
+           bool descending);
+
 /*** END STUDENT HELPER FUNCTIONS ***/
 
 /*** DO NOT MODIFY BELOW ***/
@@ -141,8 +150,7 @@ void my_hybrid_sort(vector<T> &list, bool descending = false);
 
 // Talha
 /* Base B Radix Sort */
-// template <Integral T>
-// void radix_sort(vector<T> &list, unsigned int base = 10,
-//                bool descending = false);
 
-#endif
+template <Integral T>
+void radix_sort(vector<T> &list, unsigned int base = 10,
+                bool descending = false);
