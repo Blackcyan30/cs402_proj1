@@ -24,6 +24,15 @@ int partition_helper(std::vector<T> &list, int low, int high, bool descending);
 template <typename T>
 void merge(std::vector<T> &left, std::vector<T> &right, std::vector<T> &list,
            bool descending);
+
+template <typename T>
+void insertion_sort_run(std::vector<T> &list, size_t start, size_t end,
+                        bool descending);
+
+template <typename T>
+void merge_runs(std::vector<T> &list, size_t start1, size_t end1, size_t start2,
+                size_t end2, bool descending);
+
 /*** END STUDENT HELPER FUNCTIONS ***/
 
 /*** DO NOT MODIFY BELOW ***/
