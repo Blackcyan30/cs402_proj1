@@ -2,6 +2,7 @@
 #include <random>
 #include <type_traits>
 #include <vector>
+#include <ctime>
 
 #pragma once
 using namespace std;
