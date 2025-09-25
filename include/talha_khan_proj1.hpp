@@ -23,6 +23,9 @@ void quicksort_helper(std::vector<T> &list, int low, int high, bool descending);
 template <typename T>
 int partition_helper(std::vector<T> &list, int low, int high, bool descending);
 
+template<typename T>
+void radix_sort_helper(vector<T> &list, unsigned int base, bool descending);
+
 /*** END STUDENT HELPER FUNCTIONS ***/
 
 /*** DO NOT MODIFY BELOW ***/
