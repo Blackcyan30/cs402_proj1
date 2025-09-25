@@ -91,6 +91,7 @@ void bubble_sort(vector<T> &list, bool descending) {
 template <typename T>
 void selection_sort(std::vector<T> &list, bool descending) {
   // Your code here!
+  return;
 }
 
 /* Insertion Sort
@@ -123,6 +124,7 @@ void insertion_sort(vector<T> &list, bool descending)
 		}
 		list[j + 1] = unsortedVal;
 	}
+
 }
 
 /* Quicksort
@@ -206,25 +208,53 @@ int partition_helper(std::vector<T> &list, int low, int high, bool descending) {
  *
  * */
 template <typename T>
-void merge_sort(std::vector<T> &list, bool decending) {
-  // Your code here!
-  // std::uint64_t n = list.size();
-  // if (n <= 1) return;
-  // if (is_sorted(list.begin(), list.end())) return;
-  // std::vector<T> left(list.begin(), list.begin() + n / 2);
-  // std::vector<T> right(list.begin() + n / 2, list.end());
-  // merge_sort(left, descending);
-  // merge_sort(right, descending);
-  // merge(left, right, list, descending);
+void merge_sort(std::vector<T> &list, bool descending) {
+  std::uint64_t n = list.size();
+  if (n <= 1) return;
+  if (descending) {
+    if (std::is_sorted(list.begin(), list.end(), std::greater<T>())) return;
+  } else {
+    if (std::is_sorted(list.begin(), list.end())) return;
+  }
+  std::vector<T> left(list.begin(), list.begin() + n / 2);
+  std::vector<T> right(list.begin() + n / 2, list.end());
+  merge_sort(left, descending);
+  merge_sort(right, descending);
+  merge(left, right, list, descending);
 }
 
 template <typename T>
 void merge(std::vector<T> &left, std::vector<T> &right, std::vector<T> &list,
            bool descending) {
-  // std::uint64_t i{0}, j{0}, k{0};
-  // if (left[i] < right[j]) {
-  //   list.push_back()
-  // }
+  list.clear();
+  std::uint64_t i{0}, j{0}, k{0};
+  std::uint64_t left_size{left.size()}, right_size{right.size()};
+  while (i < left_size && j < right_size) {
+    if (descending) {
+      if (left[i] > right[j]) {
+        list.push_back(left[i]);
+        i++;
+      } else {
+        list.push_back(right[j]);
+        j++;
+      }
+    } else {
+      if (left[i] < right[j]) {
+        list.push_back(left[i]);
+        i++;
+      } else {
+        list.push_back(right[j]);
+        j++;
+      }
+    }
+  }
+
+  for (; i < left_size; i++) {
+    list.push_back(left[i]);
+  }
+  for (; j < right_size; j++) {
+    list.push_back(right[j]);
+  }
 }
 
 /* Bucket Merge Sort
@@ -248,6 +278,7 @@ void merge(std::vector<T> &left, std::vector<T> &right, std::vector<T> &list,
 template <typename T>
 void bucket_merge_sort(std::vector<T> &list, bool descending) {
   // Your code here!
+  return;
 }
 
 /* Binary Radix Sort
@@ -360,6 +391,7 @@ void binary_radix_sort_helper(vector<T> &list, bool descending) {
 template <typename T>
 void my_hybrid_sort(std::vector<T> &list, bool descending) {
   // Your code here!
+  return;
 }
 
 /* Base B Radix Sort
@@ -397,6 +429,7 @@ void my_hybrid_sort(std::vector<T> &list, bool descending) {
 template <Integral T>
 void radix_sort(std::vector<T> &list, unsigned int base, bool descending) {
   // Your code here!
+  return;
 }
 
 int random_num(int min, int max) {
@@ -407,6 +440,3 @@ int random_num(int min, int max) {
       min, max);  // Uniform distribution in [min, max]
   return dis(gen);
 }
-
-template void quicksort<int>(std::vector<int> &, bool);
-template std::vector<int> &quick_partition<int>(std::vector<int> &, bool);
