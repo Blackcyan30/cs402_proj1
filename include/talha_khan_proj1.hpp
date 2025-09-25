@@ -2,15 +2,13 @@
 #include <random>
 #include <type_traits>
 #include <vector>
-#include <cstdlib>
-#include <ctime>
 
 #pragma once
 using namespace std;
 
 /*** Helper Functions ***/
 inline unsigned int get_rand_index(unsigned int len) {
-  srand(static_cast<unsigned int>(time(nullptr)));
+  std::srand(std::time(nullptr));
   return static_cast<unsigned int>(std::rand() % len);
 }
 
@@ -23,11 +21,6 @@ void quicksort_helper(std::vector<T> &list, int low, int high, bool descending);
 template <typename T>
 int partition_helper(std::vector<T> &list, int low, int high, bool descending);
 
-
-template<typename T>
-void binary_radix_sort_helper(vector<T> &list, bool descending = false);
-
-
 template <typename T>
 void merge(std::vector<T> &left, std::vector<T> &right, std::vector<T> &list,
            bool descending);
@@ -39,6 +32,21 @@ void insertion_sort_run(std::vector<T> &list, size_t start, size_t end,
 template <typename T>
 void merge_runs(std::vector<T> &list, size_t start1, size_t end1, size_t start2,
                 size_t end2, bool descending);
+
+template <typename T>
+void insertion_sort_helper(std::vector<T> &list, int start, int end,
+                           bool descending);
+template <typename T>
+void merge_helper(std::vector<T> &list, int left, int mid, int right,
+                  bool descending);
+
+template <typename T>
+void insertion_sort_helper(std::vector<T> &list, int start, int end,
+                           bool descending);
+
+template <typename T>
+void merge_helper(std::vector<T> &list, int left, int mid, int right,
+                  bool descending);
 /*** END STUDENT HELPER FUNCTIONS ***/
 
 /*** DO NOT MODIFY BELOW ***/
