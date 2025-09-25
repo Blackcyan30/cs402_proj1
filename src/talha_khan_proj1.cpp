@@ -307,13 +307,6 @@ void my_hybrid_sort(std::vector<T> &list, bool descending) {
 // }
 
 // Helper function to print vector
-template <typename T>
-void print_vector(const std::vector<T>& vec) {
-    for (const auto& elem : vec) {
-        std::cout << elem << " ";
-    }
-    std::cout << std::endl;
-}
 
 int main() {
   /**** STUDENT CODE HERE ****/
@@ -374,7 +367,7 @@ int main() {
   std::cout << "All tests completed successfully!\n";
 
   std:: cout << "\nBucket Merge Sort Tests" << std::endl;
-  std::vector<int> vec7 = {5, 2, 9, 1, 5, 6, 22, 4, 3, 11, 55, 10};
+  std::vector<int> vec7 = {5, 2, 9, 1, 5, 6, 22, 4, 3, 11, 55, 10, 15};
   std::cout << "\nOriginal: ";
   print_vector(vec7);
   std::cout << "\nTest 1: Ascending\n";

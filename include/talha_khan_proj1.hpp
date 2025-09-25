@@ -16,6 +16,14 @@ unsigned int get_rand_index(unsigned int len) {
 
 /*** STUDENT HELPER FUNCTIONS HERE ***/
 
+
+template <typename T>
+void print_vector(const std::vector<T>& vec) {
+    for (const auto& elem : vec) {
+        std::cout << elem << " ";
+    }
+    std::cout << std::endl;
+}
 template <typename T>
 void insertion_sort_helper(std::vector<T> &list, int start, int end, bool descending) {
     for (int i = start + 1; i < end; i++) {
@@ -82,6 +90,7 @@ void merge(std::vector<T>& list, int left, int mid, int right, bool descending) 
         }
     }
 }
+
 
 
 /*** END STUDENT HELPER FUNCTIONS ***/
