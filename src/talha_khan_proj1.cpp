@@ -51,8 +51,25 @@
  *                   in ascending order (the default)
  * */
 template <typename T>
-void bubble_sort(std::vector<T> &list, bool descending) {
-  return;  // Temporary fix to prevent segfault
+void bubble_sort(vector<T> &list, bool descending) {
+    int numSwaps = 0;
+    for (size_t i = 0; i < list.size(); i++)
+    {
+        numSwaps = 0;
+        //size - 1 - i because the last i elements are already sorted
+        for (size_t j = 0; j < list.size() - 1 - i; j++)
+        {
+            if (!descending && list[j+1] < list[j] || descending && list[j+1] > list[j])
+            {
+                //perform swap
+                std::swap(list[j], list[j+1]);
+                numSwaps++;
+            }
+        }
+        if (numSwaps == 0)
+            break;
+    }
+    return;
 }
 
 /* Selection Sort
@@ -92,21 +109,20 @@ void selection_sort(std::vector<T> &list, bool descending) {
  *                   in ascending order (the default)
  * */
 template <typename T>
-void insertion_sort(std::vector<T> &list, bool descending) {
-  size_t n = list.size();
-  for (size_t i = 1; i < n; ++i) {
-    T key = list[i];
-    int j = i - 1;
-
-    // Move elements that are greater than key (for ascending) or less than key
-    // (for descending) to one position ahead of their current position
-    while (j >= 0 &&
-           ((descending && list[j] < key) || (!descending && list[j] > key))) {
-      list[j + 1] = list[j];
-      --j;
-    }
-    list[j + 1] = key;
-  }
+void insertion_sort(vector<T> &list, bool descending) 
+{
+	for (size_t i = 1; i < list.size(); i++)
+	{
+		T unsortedVal = list[i];
+		int j = i - 1;
+		//keep going until our unsorted val is in the right spot
+		while ((!descending && j >= 0 && list[j] > unsortedVal) || (descending && j >= 0 && list[j] < unsortedVal)) 
+		{
+			list[j + 1] = list[j];
+			j = j - 1;
+		}
+		list[j + 1] = unsortedVal;
+	}
 }
 
 /* Quicksort
@@ -278,9 +294,81 @@ void bucket_merge_sort(std::vector<T> &list, bool descending) {
  *                      - (unsigned) long int
  */
 template <Integral T>
-void binary_radix_sort(std::vector<T> &list, bool descending) {
-  // Your code here!
-  return;
+void binary_radix_sort(vector<T> &list, bool descending) {
+    // Since C++ uses 2's compliment, we'll handle both cases.
+    vector<T> negatives;
+    vector<T> nonNegatives;
+    for (T val : list)
+        // we can flip the sign so we don't have to deal with 2's compliment
+        if (val < 0)
+            negatives.push_back(-1 * val);
+        else
+            nonNegatives.push_back(val);
+    binary_radix_sort_helper(negatives, !descending); // flip negatives!
+    binary_radix_sort_helper(nonNegatives, descending);
+    // flip the sign of negative numbers back
+    for (T& val : negatives)
+        val = -1 * val;
+    //append negatives to the front of nonNegatives or vice versa if descending
+    list.clear();
+    if (descending)
+    {
+        list.insert(list.end(), nonNegatives.begin(), nonNegatives.end());
+        list.insert(list.end(), negatives.begin(), negatives.end());
+    }
+    else
+    {
+        list.insert(list.end(), negatives.begin(), negatives.end());
+        list.insert(list.end(), nonNegatives.begin(), nonNegatives.end());   
+    }
+}
+
+
+/* Binary Radix Helper
+ *
+ * Helper function for Binary Radix Sort. You will implement this to help with your
+ * Binary Radix Sort algorithm above.
+ *
+ */
+template<typename T> 
+void binary_radix_sort_helper(vector<T> &list, bool descending) {
+    if (list.size() == 0) return;
+    T maxValue = list[0];
+    for (int i = 1; i < list.size(); i++)
+        if (list[i] > maxValue)
+            maxValue = list[i];
+    // to avoid doing unnecessary work ( counting sort on a bunch of just 0s ), we want to find the most significant 1 bit
+    // we can shift right until we hit 0 and track how many shifts
+    int maxBitsToSort = 0;
+    for (int i = maxValue; i > 0; i = i >> 1)
+        maxBitsToSort++;
+
+    // we only need to go maxBitsToSort times
+    for (int i = 0; i < maxBitsToSort; i++)
+    {
+        vector<T> zeroList;
+        vector<T> oneList;
+
+        for (T num : list)
+        {
+            if ((num >> i) & 1) // checks LEAST SIGNIFICANT BIT after shift!!
+                oneList.push_back(num);  //if the current bit is 1
+            else
+                zeroList.push_back(num); //if the current bit is 0
+        }
+
+        list.clear();
+        if (descending)
+        {
+            list.insert(list.end(), oneList.begin(), oneList.end());
+            list.insert(list.end(), zeroList.begin(), zeroList.end());
+        }
+        else
+        {
+            list.insert(list.end(), zeroList.begin(), zeroList.end());
+            list.insert(list.end(), oneList.begin(), oneList.end());
+        }
+    }
 }
 
 /* Your Hybrid Sort

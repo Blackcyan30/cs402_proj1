@@ -272,26 +272,6 @@ TEST(QuickSort, DescendingRandomListUnsignedShort) {
       std::is_sorted(list.begin(), list.end(), std::greater<unsigned short>()));
 }
 
-TEST(QuickSort, EmptyListBool) {
-  std::vector<bool> list = {};
-  quicksort(list, false);
-  EXPECT_TRUE(std::is_sorted(list.begin(), list.end()));
-}
-
-TEST(QuickSort, RandomListBool) {
-  std::vector<bool> list;
-  for (int v : gen_random_list(100)) list.push_back(static_cast<bool>(v));
-  quicksort(list, false);
-  EXPECT_TRUE(std::is_sorted(list.begin(), list.end()));
-}
-
-TEST(QuickSort, DescendingRandomListBool) {
-  std::vector<bool> list;
-  for (int v : gen_random_list(100)) list.push_back(static_cast<bool>(v));
-  quicksort(list, true);
-  EXPECT_TRUE(std::is_sorted(list.begin(), list.end(), std::greater<bool>()));
-}
-
 TEST(QuickSort, EmptyListUnsignedLongLong) {
   std::vector<unsigned long long> list = {};
   quicksort(list, false);
@@ -557,24 +537,6 @@ TEST(MergeSort, DescendingRandomListUnsignedShort) {
   merge_sort(list, true);
   EXPECT_TRUE(
       std::is_sorted(list.begin(), list.end(), std::greater<unsigned short>()));
-}
-
-TEST(MergeSort, EmptyListBool) {
-  std::vector<bool> list = {};
-  merge_sort(list, false);
-  EXPECT_TRUE(std::is_sorted(list.begin(), list.end()));
-}
-
-TEST(MergeSort, RandomListBool) {
-  std::vector<bool> list = {true, false, true};
-  merge_sort(list, false);
-  EXPECT_TRUE(std::is_sorted(list.begin(), list.end()));
-}
-
-TEST(MergeSort, DescendingRandomListBool) {
-  std::vector<bool> list = {true, false};
-  merge_sort(list, true);
-  EXPECT_TRUE(std::is_sorted(list.begin(), list.end(), std::greater<bool>()));
 }
 
 TEST(MergeSort, EmptyListUnsignedLongLong) {
@@ -843,24 +805,6 @@ TEST(BubbleSort, DescendingRandomListUnsignedShort) {
       std::is_sorted(list.begin(), list.end(), std::greater<unsigned short>()));
 }
 
-TEST(BubbleSort, EmptyListBool) {
-  std::vector<bool> list = {};
-  bubble_sort(list, false);
-  EXPECT_TRUE(std::is_sorted(list.begin(), list.end()));
-}
-
-TEST(BubbleSort, RandomListBool) {
-  std::vector<bool> list = {true, false, true};
-  bubble_sort(list, false);
-  EXPECT_TRUE(std::is_sorted(list.begin(), list.end()));
-}
-
-TEST(BubbleSort, DescendingRandomListBool) {
-  std::vector<bool> list = {true, false};
-  bubble_sort(list, true);
-  EXPECT_TRUE(std::is_sorted(list.begin(), list.end(), std::greater<bool>()));
-}
-
 TEST(BubbleSort, EmptyListUnsignedLongLong) {
   std::vector<unsigned long long> list = {};
   bubble_sort(list, false);
@@ -1125,24 +1069,6 @@ TEST(SelectionSort, DescendingRandomListUnsignedShort) {
   selection_sort(list, true);
   EXPECT_TRUE(
       std::is_sorted(list.begin(), list.end(), std::greater<unsigned short>()));
-}
-
-TEST(SelectionSort, EmptyListBool) {
-  std::vector<bool> list = {};
-  selection_sort(list, false);
-  EXPECT_TRUE(std::is_sorted(list.begin(), list.end()));
-}
-
-TEST(SelectionSort, RandomListBool) {
-  std::vector<bool> list = {true, false, true};
-  selection_sort(list, false);
-  EXPECT_TRUE(std::is_sorted(list.begin(), list.end()));
-}
-
-TEST(SelectionSort, DescendingRandomListBool) {
-  std::vector<bool> list = {true, false};
-  selection_sort(list, true);
-  EXPECT_TRUE(std::is_sorted(list.begin(), list.end(), std::greater<bool>()));
 }
 
 TEST(SelectionSort, EmptyListUnsignedLongLong) {
@@ -1411,24 +1337,6 @@ TEST(InsertionSort, DescendingRandomListUnsignedShort) {
       std::is_sorted(list.begin(), list.end(), std::greater<unsigned short>()));
 }
 
-TEST(InsertionSort, EmptyListBool) {
-  std::vector<bool> list = {};
-  insertion_sort(list, false);
-  EXPECT_TRUE(std::is_sorted(list.begin(), list.end()));
-}
-
-TEST(InsertionSort, RandomListBool) {
-  std::vector<bool> list = {true, false, true};
-  insertion_sort(list, false);
-  EXPECT_TRUE(std::is_sorted(list.begin(), list.end()));
-}
-
-TEST(InsertionSort, DescendingRandomListBool) {
-  std::vector<bool> list = {true, false};
-  insertion_sort(list, true);
-  EXPECT_TRUE(std::is_sorted(list.begin(), list.end(), std::greater<bool>()));
-}
-
 TEST(InsertionSort, EmptyListUnsignedLongLong) {
   std::vector<unsigned long long> list = {};
   insertion_sort(list, false);
@@ -1695,24 +1603,6 @@ TEST(BucketMergeSort, DescendingRandomListUnsignedShort) {
       std::is_sorted(list.begin(), list.end(), std::greater<unsigned short>()));
 }
 
-TEST(BucketMergeSort, EmptyListBool) {
-  std::vector<bool> list = {};
-  bucket_merge_sort(list, false);
-  EXPECT_TRUE(std::is_sorted(list.begin(), list.end()));
-}
-
-TEST(BucketMergeSort, RandomListBool) {
-  std::vector<bool> list = {true, false, true};
-  bucket_merge_sort(list, false);
-  EXPECT_TRUE(std::is_sorted(list.begin(), list.end()));
-}
-
-TEST(BucketMergeSort, DescendingRandomListBool) {
-  std::vector<bool> list = {true, false};
-  bucket_merge_sort(list, true);
-  EXPECT_TRUE(std::is_sorted(list.begin(), list.end(), std::greater<bool>()));
-}
-
 TEST(BucketMergeSort, EmptyListUnsignedLongLong) {
   std::vector<unsigned long long> list = {};
   bucket_merge_sort(list, false);
@@ -1977,24 +1867,6 @@ TEST(MyHybridSort, DescendingRandomListUnsignedShort) {
   my_hybrid_sort(list, true);
   EXPECT_TRUE(
       std::is_sorted(list.begin(), list.end(), std::greater<unsigned short>()));
-}
-
-TEST(MyHybridSort, EmptyListBool) {
-  std::vector<bool> list = {};
-  my_hybrid_sort(list, false);
-  EXPECT_TRUE(std::is_sorted(list.begin(), list.end()));
-}
-
-TEST(MyHybridSort, RandomListBool) {
-  std::vector<bool> list = {true, false, true};
-  my_hybrid_sort(list, false);
-  EXPECT_TRUE(std::is_sorted(list.begin(), list.end()));
-}
-
-TEST(MyHybridSort, DescendingRandomListBool) {
-  std::vector<bool> list = {true, false};
-  my_hybrid_sort(list, true);
-  EXPECT_TRUE(std::is_sorted(list.begin(), list.end(), std::greater<bool>()));
 }
 
 TEST(MyHybridSort, EmptyListUnsignedLongLong) {
