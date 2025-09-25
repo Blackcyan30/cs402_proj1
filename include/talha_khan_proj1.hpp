@@ -23,9 +23,15 @@ void quicksort_helper(std::vector<T> &list, int low, int high, bool descending);
 template <typename T>
 int partition_helper(std::vector<T> &list, int low, int high, bool descending);
 
+
+template<typename T>
+void binary_radix_sort_helper(vector<T> &list, bool descending = false);
+
+
 template <typename T>
 void merge(std::vector<T> &left, std::vector<T> &right, std::vector<T> &list,
            bool descending);
+
 /*** END STUDENT HELPER FUNCTIONS ***/
 
 /*** DO NOT MODIFY BELOW ***/
